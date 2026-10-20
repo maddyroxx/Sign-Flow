@@ -545,6 +545,20 @@ input, textarea {
   z-index: 10;
 }
 
+.avatar-title-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  background-color: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--main-text);
+  letter-spacing: -0.01em;
+}
+
 .model-segmented {
   display: flex;
   align-items: center;

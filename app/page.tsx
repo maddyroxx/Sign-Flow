@@ -100,9 +100,7 @@ export default function SignFlowHome() {
   const [inputTab, setInputTab] = useState<'text' | 'voice'>('text')
   const [avatarPhrase, setAvatarPhrase] = useState('HELLO YOU HOW')
   const [activeGlossTokens, setActiveGlossTokens] = useState<string[]>(['HELLO', 'YOU', 'HOW'])
-  const [avatarModel, setAvatarModel] = useState<AvatarModelType>('vincent')
-  const [modelNotice, setModelNotice] = useState<ModelNotice | null>(null)
-  const [showVincentGuide, setShowVincentGuide] = useState(false)
+  const [avatarModel] = useState<AvatarModelType>('default')
   const [requestId, setRequestId] = useState(1)
   const [stopId, setStopId] = useState(0)
   const [resetId, setResetId] = useState(0)
@@ -585,39 +583,9 @@ export default function SignFlowHome() {
         >
           {/* Avatar Toolbar */}
           <div className="avatar-toolbar">
-            <div className="model-segmented" role="group" aria-label="Choose 3D Avatar Rig">
-              <button
-                type="button"
-                className={`model-pill-btn ${avatarModel === 'vincent' ? 'active' : ''}`}
-                onClick={() => setAvatarModel('vincent')}
-                title="Official Vincent Character Rig from Blender Studio (CC BY 4.0)"
-              >
-                👦 Vincent (Blender)
-              </button>
-              <button
-                type="button"
-                className={`model-pill-btn ${avatarModel === 'turquoise' ? 'active' : ''}`}
-                onClick={() => setAvatarModel('turquoise')}
-                title="Signature Turquoise Humanoid Robot Rig"
-              >
-                🤖 Turquoise Bot
-              </button>
-              <button
-                type="button"
-                className={`model-pill-btn ${avatarModel === 'human' ? 'active' : ''}`}
-                onClick={() => setAvatarModel('human')}
-                title="Stylized Human Face Rig"
-              >
-                👤 Human
-              </button>
-              <button
-                type="button"
-                className={`model-pill-btn ${avatarModel === 'default' ? 'active' : ''}`}
-                onClick={() => setAvatarModel('default')}
-                title="Classic Y-Bot Mixamo Rig"
-              >
-                🦾 Classic
-              </button>
+            <div className="avatar-title-badge" title="Classic 3D Humanoid Avatar (Y-Bot)">
+              <span>🦾</span>
+              <span>Classic Avatar</span>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
@@ -645,101 +613,6 @@ export default function SignFlowHome() {
             </div>
           </div>
 
-          {/* Model Status Notice Bar */}
-          {modelNotice && (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '0.45rem 0.85rem',
-                fontSize: '0.78rem',
-                borderRadius: '8px',
-                background: modelNotice.type === 'success' ? '#E8F7EF' : '#FEF3C7',
-                color: modelNotice.type === 'success' ? '#1D8356' : '#92400E',
-                border: `1px solid ${modelNotice.type === 'success' ? '#B8EAD1' : '#FDE68A'}`,
-                margin: '0.4rem 0.75rem 0 0.75rem',
-                gap: '0.5rem',
-                animation: 'fadeIn 0.2s ease',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', minWidth: 0 }}>
-                <Info size={14} style={{ flexShrink: 0 }} />
-                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {modelNotice.message}
-                </span>
-              </div>
-              {avatarModel === 'vincent' && (
-                <button
-                  type="button"
-                  onClick={() => setShowVincentGuide((prev) => !prev)}
-                  style={{
-                    background: 'white',
-                    border: '1px solid currentColor',
-                    borderRadius: '6px',
-                    padding: '2px 8px',
-                    fontSize: '0.72rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                    color: 'inherit',
-                  }}
-                >
-                  {showVincentGuide ? 'Hide Guide' : 'Export Guide'}
-                </button>
-              )}
-            </div>
-          )}
-
-          {/* Expandable Vincent Export Instructions */}
-          {showVincentGuide && (
-            <div
-              style={{
-                margin: '0.4rem 0.75rem 0 0.75rem',
-                padding: '0.75rem 1rem',
-                background: 'var(--surface)',
-                border: '1px solid var(--border)',
-                borderRadius: '10px',
-                fontSize: '0.8rem',
-                color: 'var(--primary-text)',
-                boxShadow: '0 2px 8px rgba(32, 34, 56, 0.05)',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
-                <strong style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--deep-purple)' }}>
-                  <Sparkles size={14} /> Blender Studio Vincent Export (CC BY 4.0)
-                </strong>
-                <button
-                  type="button"
-                  onClick={() => setShowVincentGuide(false)}
-                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--secondary-text)' }}
-                >
-                  <X size={14} />
-                </button>
-              </div>
-              <p style={{ margin: '0 0 0.4rem 0', color: 'var(--secondary-text)', lineHeight: 1.4 }}>
-                Vincent is downloaded in your workspace (<code>vincent.blend</code>, 19.2 MB). Because WebGL cannot read binary Blender project files, run this headless command to produce <code>public/models/vincent.glb</code>:
-              </p>
-              <div
-                style={{
-                  background: 'var(--surface-alt)',
-                  padding: '0.4rem 0.6rem',
-                  borderRadius: '6px',
-                  fontFamily: 'monospace',
-                  fontSize: '0.75rem',
-                  color: 'var(--deep-purple)',
-                  marginBottom: '0.4rem',
-                  userSelect: 'all',
-                }}
-              >
-                blender -b vincent.blend -P scripts/export_vincent_glb.py
-              </div>
-              <p style={{ margin: 0, fontSize: '0.72rem', color: 'var(--secondary-text)' }}>
-                <em>Or in Blender GUI:</em> File &gt; Export &gt; glTF 2.0 (.glb) &gt; Save to <code>public/models/vincent.glb</code>. The app automatically detects the exported file and retargets all 140+ ISL signs and fingerspelling!
-              </p>
-            </div>
-          )}
-
           {/* 3D Canvas Viewport */}
           <div className="avatar-viewport-container">
             <AvatarPlayer
@@ -754,7 +627,6 @@ export default function SignFlowHome() {
               speed={speed}
               onStateChange={setAvatarState}
               onProgress={handleProgress}
-              onModelNotice={setModelNotice}
             />
 
             {/* Live Sign Badge Overlay */}
