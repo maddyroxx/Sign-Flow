@@ -2,13 +2,13 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "Yap & Render Runtime Architecture",
+    "title": "SignFlow Runtime Architecture",
     "locale": "en",
-    "output": "yap-render.html",
+    "output": "sign-flow.html",
     "quality_profile": "showcase",
     "animation": "trace",
     "repository": {
-      "url": "https://github.com/mitarthpathak/yap-render",
+      "url": "https://github.com/maddyroxx/Sign-Flow",
       "revision": "52fe61fd6c3e08f2060bf5f4e991c0002d6c8799"
     },
     "legend": {
@@ -621,7 +621,7 @@
       "dot": "orange",
       "title": "Local-only account",
       "items": [
-        "Sign in and sign up write {name, email} to localStorage key yap-render-account (page.tsx:296-313)",
+        "Sign in and sign up write {name, email} to localStorage key sign-flow-account (page.tsx:296-313)",
         "The password field is required but never stored or checked; no server call is made"
       ]
     }
